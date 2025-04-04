@@ -27,6 +27,16 @@ app.post('/api/book', async (req, res) => {
   }
 });
 
+
+// Read (All bookings)
+app.get('/api/bookings', async (req, res) => {
+  const [rows] = await db.execute('SELECT * FROM bookings ORDER BY date ASC');
+  res.json(rows);
+});
+
+
+
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
