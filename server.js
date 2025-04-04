@@ -36,6 +36,25 @@ app.get('/api/bookings', async (req, res) => {
 
 
 
+// Update
+app.put('/api/bookings/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, email, date, time, service } = req.body;
+  try {
+    await db.execute(
+      'UPDATE bookings SET name=?, email=?, date=?, time=?, service=? WHERE id=?',
+      [name, email, date, time, service, id]
+    );
+    res.json({ success: true, message: 'Updated successfully' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Update failed' });
+  }
+});
+
+
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
