@@ -24,4 +24,23 @@ async function loadBookings() {
 }
 
 
+
+function startEdit(booking) {
+  document.getElementById('name').value = booking.name;
+  document.getElementById('email').value = booking.email;
+  document.getElementById('date').value = booking.date;
+  document.getElementById('time').value = booking.time;
+  document.getElementById('service').value = booking.service;
+  editingId = booking.id;
+  document.querySelector('form button').textContent = 'Update';
+}
+
+async function deleteBooking(id) {
+  await fetch(`/api/bookings/${id}`, { method: 'DELETE' });
+  loadBookings();
+}
+
+
+
+
 window.onload = loadBookings;
