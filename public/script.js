@@ -40,6 +40,36 @@ async function deleteBooking(id) {
   loadBookings();
 }
 
+document.getElementById('bookingForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const data = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    date: document.getElementById('date').value,
+    time: document.getElementById('time').value,
+    service: document.getElementById('service').value,
+  };
+
+  if (editingId) {
+    await fetch(`/api/bookings/${editingId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    editingId = null;
+    document.querySelector('form button').textContent = 'Book';
+  } else {
+    await fetch('/api/book', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+  }
+
+  this.reset();
+  loadBookings();
+});
 
 
 
