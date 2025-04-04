@@ -52,7 +52,16 @@ app.put('/api/bookings/:id', async (req, res) => {
 });
 
 
-
+// Delete
+app.delete('/api/bookings/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await db.execute('DELETE FROM bookings WHERE id = ?', [id]);
+    res.json({ success: true, message: 'Deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Deletion failed' });
+  }
+});
 
 
 
